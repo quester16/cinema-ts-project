@@ -1,0 +1,13 @@
+.layout {
+	@apply max-w-[1024px] mx-auto bg-white px-1 mb-[50px];
+}
+
+.header {
+	@apply bg-gray-100 flex  p-4 w-full mb-5;
+}
+.nav {
+	@apply w-[1024px] mx-auto;
+}
+.ul {
+	@apply flex gap-4 justify-center text-[1.2rem];
+}
