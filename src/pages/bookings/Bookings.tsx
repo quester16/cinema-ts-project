@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import Button from '../../components/ui/button/Button.tsx'
 
 const Bookings = () => {
+	const [bookings, setBookings] = useState<boolean[]>(
+		Array.from({ length: 40 }, () => false)
+	)
+	const handleBooking = (index: number) => {
+		setBookings(prev => prev.map((seat, i) => (i === index ? !seat : seat)))
+	}
+
+	const calcSeat = (arr: boolean[], variant: 'free' | 'booked') => {
+		if (variant === 'free')
+			return arr.reduce((acc, seat) => (!seat ? (acc += 1) : acc), 0)
+		else return arr.reduce((acc, seat) => (seat ? (acc += 1) : acc), 0)
+	}
+
 	return (
 		<div className="w-full h-dvh bg-gray-800 pt-10 ">
 			<div className="w-[800px] bg-gray-200 rounded-md mx-auto ">
@@ -27,12 +41,13 @@ const Bookings = () => {
 							/>
 						</svg>
 						<div className="w-[430px] flex flex-wrap gap-6 ">
-							{Array.from({ length: 40 }).map((_, i) => (
+							{bookings.map((val, i) => (
 								<img
-									src="/seats.png"
+									src={val ? '/booked.png' : '/seats.png'}
 									alt="seats"
 									key={i}
 									className="cursor-pointer"
+									onClick={() => handleBooking(i)}
 								/>
 							))}
 						</div>
@@ -41,14 +56,18 @@ const Bookings = () => {
 						<div className="flex items-center justify-center gap-2">
 							<img src="/seats.png" className="h-8" />
 							<div className="flex flex-col ">
-								<strong className="text-sm">20</strong>
+								<strong className="text-sm">
+									{calcSeat(bookings, 'free')}
+								</strong>
 								<span className="text-xs font-medium">Free</span>
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2">
 							<img src="/booked.png" className="h-8" />
 							<div className="flex flex-col ">
-								<strong className="text-sm">20</strong>
+								<strong className="text-sm">
+									{calcSeat(bookings, 'booked')}
+								</strong>
 								<span className="text-xs font-medium">Booked</span>
 							</div>
 						</div>

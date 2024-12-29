@@ -1,7 +1,12 @@
 import Layout from '../../components/layout/Layout.tsx'
 import Button from '../../components/ui/button/Button.tsx'
+import { useGetPopularQuery } from '../../redux/api/booking.api.ts'
 
 const SingleMovie = () => {
+	const { data } = useGetPopularQuery()
+
+	console.log(data)
+
 	return (
 		<Layout>
 			<div className="w-full px-2 mt-9">
